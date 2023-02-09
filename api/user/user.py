@@ -11,9 +11,11 @@ class UserManagement(Resource):
     def get(self):
         # GET method 구현 부분
         database=Database()
-        data=request.get_json()
 
-        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['password']))
+        id=request.args.get('id')
+        password=request.args.get('password')
+
+        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(id,password))
         database.commit()
 
         #아이디 비밀번호 일치
@@ -21,7 +23,7 @@ class UserManagement(Resource):
             result={'nickname':row['nickname']}
             return result
         else:
-            row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s';" %data['id'])
+            row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s';" %id)
 
             #해당 유저 존재
             if(row is not None):
