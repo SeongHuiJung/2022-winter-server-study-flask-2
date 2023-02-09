@@ -19,6 +19,7 @@ class UserManagement(Resource):
         #아이디 비밀번호 일치
         if(row is not None):
             result={'nickname':row['nickname']}
+            return result
         else:
             row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s';" %data['id'])
 
