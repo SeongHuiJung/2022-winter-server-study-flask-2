@@ -16,6 +16,7 @@ class Database:
         )
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
+
     def execute(self, query, args={}):
         self.cursor.execute(query, args)
 
@@ -34,3 +35,5 @@ class Database:
 
     def close(self):
         self.cursor.close()
+
+    
