@@ -13,7 +13,7 @@ class UserManagement(Resource):
         database=Database()
         data=request.get_json()
 
-        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['pw']))
+        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['password']))
         database.commit()
 
         #아이디 비밀번호 일치
@@ -46,7 +46,7 @@ class UserManagement(Resource):
                     'message':'이미 있는 유저'}
             return result, 400
         else:
-            row=database.execute_one("INSERT INTO SeongHui.user VALUES ('%s','%s','%s');" %(data['id'], data['pw'], data['nickname']))
+            row=database.execute_one("INSERT INTO SeongHui.user VALUES ('%s','%s','%s');" %(data['id'], data['password'], data['nickname']))
             result={'is_success':True,
                     'message':'유저 생성 성공'}
             database.commit()
@@ -61,7 +61,7 @@ class UserManagement(Resource):
         data=request.get_json()
 
         #있는 유저인지 확인
-        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['pw']))
+        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['password']))
         if (row is not None):
             row=database.execute_one("SELECT * FROM SeongHui.user WHERE nickname = '%s';" %(data['nickname']))
             #현재 닉네임와 같음
@@ -70,7 +70,7 @@ class UserManagement(Resource):
                     'message':'현재 닉네임과 같음'}
                 return result,400
             else:
-                database.execute_one("UPDATE SeongHui.user SET nickname='%s' WHERE id = '%s' AND pw = '%s';" %(data['nickname'], data['id'], data['pw']))
+                database.execute_one("UPDATE SeongHui.user SET nickname='%s' WHERE id = '%s' AND pw = '%s';" %(data['nickname'], data['id'], data['password']))
                 database.commit()
                 database.close()
                 result={'is_success':True,
@@ -88,10 +88,10 @@ class UserManagement(Resource):
         data=request.get_json()
 
         #있는 유저인지 확인
-        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['pw']))
+        row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['password']))
 
         if (row is not None):
-            database.execute_one("DELETE FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'],data['pw']))
+            database.execute_one("DELETE FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(data['id'], data['password']))
             result={'is_success':True,
                     'message':'유저 삭제 성공'}
             database.commit()
