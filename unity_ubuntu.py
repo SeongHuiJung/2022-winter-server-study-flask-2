@@ -7,11 +7,19 @@ app = Flask(__name__)
 @app.route('/',methods=['GET','POST'])
 def connect():
     database=Database()
-    row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %("9","9"))
-    #id=request.args.get('id')
+
+    id=request.args.get('id')
+    password=request.args.get('password')
+
+    row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(id,password))
+    database.commit()
+
+    #아이디 비밀번호 일치
     if(row is not None):
-        return database
-    #return "연결성공"
+        result="1"
+        return result
+    else:
+        return "0"
 
 
 if __name__ == "__main__":
