@@ -10,8 +10,7 @@ def connect():
     row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %("9","9"))
     #id=request.args.get('id')
     if(row is not None):
-        result={'nickname':row['nickname']}
-        return result
+        return database
     #return "연결성공"
 
 
