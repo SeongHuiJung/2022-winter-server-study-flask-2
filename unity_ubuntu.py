@@ -7,8 +7,10 @@ app = Flask(__name__)
 @app.route('/',methods=['GET','POST'])
 def connect():
     database=Database()
-    id=request.form['id']
-    password=request.form['password']
+    #id=request.form['id']
+    #password=request.form['password']
+    id=request.args.get('id')
+    password=request.args.get('password')
 
     row=database.execute_one("SELECT * FROM SeongHui.user WHERE id = '%s' AND pw = '%s';" %(id,password))
 
